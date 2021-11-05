@@ -1,0 +1,36 @@
+﻿@model AIT.DB.Models.Branch
+
+@{
+    ViewData["Title"] = "Xem Chi Nhánh";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="pagetitle">
+    <h1>Xem Chi Nhánh</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <a asp-controller="Branches" asp-action="Index" class="breadcrumb-item active">Danh sách chi nhánh</a>
+            <li class="breadcrumb-item active">Xem Chi Nhánh @Model.BranchName</li>
+        </ol>
+    </nav>
+</div>
+<div class="card">
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Chi Nhánh:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BranchName)
+        </dd>
+        <dt class = "col-sm-2">
+           Địa Chỉ:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+    </dl>
+</div>
+<div class="text-right">
+    <a asp-action="Edit" asp-route-id="@Model.BranchId" class="btn btn-primary"><i class="bi bi-pen"></i> Chỉnh sửa</a>
+    <a asp-action="Index" class="btn btn-dark"><i class="ri-arrow-go-back-line"></i> Quay Lại</a>
+</div>

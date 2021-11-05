@@ -1,0 +1,103 @@
+﻿@model AIT.DB.Models.Employee
+
+@{
+    ViewData["Title"] = "Xem Nhân Viên";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+<div class="pagetitle">
+    <h1>Xem Nhân Viên</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <a asp-controller="Employees" asp-action="Index" class="breadcrumb-item active">Danh sách nhân viên</a>
+            <li class="breadcrumb-item active">Xem nhân viên @Model.EmployeeName</li>
+        </ol>
+    </nav>
+</div>
+<div class="card">
+    <h4 style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;text-align:center">@Model.EmployeeName</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmployeeName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmployeeName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Dob)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Dob)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateFirst)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateFirst)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ShortIntro)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShortIntro)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Avatar)
+        </dt>
+        <dd class="col-sm-10">
+            <img style="width:100px;height:100px;object-fit:cover" src="~/Images/employees/@Model.Avatar" alt="@Model.EmployeeName" />
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Status == false)
+            {
+                <span class="badge badge-success" style="background-color:green">Hoạt Động</span>
+            }
+            else
+            {
+                <p class="badge badge-warning" style="background-color: #ffc107">Tạm nghỉ</p>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Chi Nhánh:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Branch.BranchName)
+        </dd>
+        <dt class="col-sm-2">
+            Kỹ Năng:
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var name = Model.Skill.SkillName;
+                string[] arrName = name.Split(",");
+                foreach (var arr in arrName)
+                {
+                    <span class="badge badge-dark" style="background-color:gray">@arr</span>
+                }
+            }
+        </dd>
+    </dl>
+</div>
+<div class="text-right">
+    @if (Model.Status)
+    {
+        <a asp-action="Delete" asp-route-id="@Model.EmployeeId" class="btn btn-danger" title="Xóa"><i class="bi bi-trash-fill"></i>Xoá</a>
+        <a asp-action="Inactivity" class="btn btn-dark"><i class="ri-arrow-go-back-line"></i> Quay Lại</a>
+    }
+    else
+    {
+        <a asp-action="Edit" asp-route-id="@Model.EmployeeId" class="btn btn-primary"><i class="bi bi-pen"></i> Chỉnh sửa</a>
+        <a asp-action="Delete" asp-route-id="@Model.EmployeeId" class="btn btn-danger" title="Xóa"><i class="bi bi-trash-fill"></i>Xoá</a>
+        <a asp-action="Index" class="btn btn-dark"><i class="ri-arrow-go-back-line"></i> Quay Lại</a>
+    }
+</div>

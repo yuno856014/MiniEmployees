@@ -1,0 +1,54 @@
+﻿@model AIT.DB.Models.Skill
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Kỹ Năng";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>Chỉnh Sửa Kỹ Năng</h1>
+    <nav>   
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <a asp-controller="Skills" asp-action="Index" class="breadcrumb-item active">Danh sách kỹ năng</a>
+            <li class="breadcrumb-item active">Chỉnh sửa kỹ năng @Model.SkillName</li>
+        </ol>
+    </nav>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="SkillId" />
+                <div class="form-group">
+                    <label asp-for="SkillName" class="control-label"></label>
+                    <input asp-for="SkillName" class="form-control" />
+                    <span asp-validation-for="SkillName" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="text-right">
+                    <button type="button" data-bs-toggle="modal"  data-bs-target="#basicModal" class="btn btn-success"><i class="ri-check-fill"></i>Lưu</button>
+                    <a asp-action="Index" class="btn btn-dark"><i class="ri-arrow-go-back-line"></i>Quay Lại</a>
+                </div>
+                <div class="modal fade" id="basicModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Bạn đã chắc chắn thay đổi kỹ năng @Model.SkillName?</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Đóng</button>
+                                <button type="submit" class="btn btn-success"><i class="ri-check-fill"></i>Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

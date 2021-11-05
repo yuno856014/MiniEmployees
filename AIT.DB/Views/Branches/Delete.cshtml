@@ -1,0 +1,73 @@
+﻿@model AIT.DB.Models.Branch
+
+@{
+    ViewData["Title"] = "Xóa Chi Nhánh";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>Xóa Chi Nhánh</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <a asp-controller="Branches" asp-action="Index" class="breadcrumb-item active">Danh sách chi nhánh</a>
+            <li class="breadcrumb-item active">Xóa Chi Nhánh @Model.BranchName</li>
+        </ol>
+    </nav>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div style="float:right;width:20%" class="alert @TempData["AlertType"] hide" id="AlertBox" role="alert">
+            <i class="bi bi-exclamation-octagon me-1"></i> @TempData["AlertMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+<div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" style="width:55%" role="alert">
+    <i class="bi bi-exclamation-triangle me-1"></i><strong>Error!</strong> Xóa vĩnh viên xin cân nhắc
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="card" style="width:55%">
+    <dl class="row">
+        <h2 style="text-align:center;">@Model.BranchName</h2>
+        <hr />
+        <dt class="col-sm-2">
+            Chi Nhánh:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BranchName)
+        </dd>
+        <dt class="col-sm-2">
+            Địa Chỉ:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="BranchId" />
+        <button data-bs-toggle="modal" data-bs-target="#basicModal" type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Xóa</button>
+        <a asp-action="Index" class="btn btn-dark"><i class="ri-arrow-go-back-line"></i> Quay Lại</a>
+        <div class="modal fade" id="basicModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Bạn đã chắc chắn xóa chi nhánh @Model.BranchName này?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Đóng</button>
+                        <button type="submit" class="btn btn-success"><i class="ri-check-fill"></i>Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <script>
+        $(function () {
+            $('#AlertBox').removeClass('hide');
+            $('#AlertBox').delay(3500).slideUp(600);
+        });
+    </script>
+}

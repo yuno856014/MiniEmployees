@@ -1,0 +1,40 @@
+﻿@model AIT.DB.Models.Skill
+
+@{
+    ViewData["Title"] = "Thêm mới kỹ năng";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>Thêm mới kỹ năng</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <a asp-controller="Skills" asp-action="Index" class="breadcrumb-item active">Danh sách kỹ năng</a>
+            <li class="breadcrumb-item active">Thêm mới kỹ năng</li>
+        </ol>
+    </nav>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SkillName" class="control-label"></label>
+                    <input asp-for="SkillName" class="form-control" />
+                    <span asp-validation-for="SkillName" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="text-right">
+                    <button type="submit"  class="btn btn-success"><i class="ri-check-fill"></i>Lưu</button>
+                    <a asp-action="Index" class="btn btn-dark"><i class="ri-arrow-go-back-line"></i> Quay Lại</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

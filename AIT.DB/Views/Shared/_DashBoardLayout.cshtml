@@ -1,0 +1,149 @@
+﻿@inject SignInManager<User> signInManager
+@{
+    var user = new User();
+    if (signInManager.IsSignedIn(User))
+    {
+        user = signInManager.UserManager.FindByNameAsync(User.Identity.Name).Result;
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="~/Images/Logo.png" rel="icon" />
+    <title>Công Ty AIT | @ViewBag.Title</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="~/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="~/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+
+    <!-- Template Main CSS File -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a asp-controller="DashBoard" asp-action="Index" class="logo d-flex align-items-center">
+                <img src="~/Images/Logo.png" alt="">
+                <span class="d-none d-lg-block">Aureole IT</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@User.Identity.Name</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="Account" asp-action="Signout">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li>
+            </ul>
+        </nav>
+
+    </header><!-- End Header -->
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " asp-controller="DashBoard" asp-action="Index">
+                    <i class="bi bi-grid"></i>
+                    <span>Trang Chủ</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+            <li class="nav-heading">
+                Admin
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Branches" asp-action="Index">
+                    <i class="bi bi-card-list"></i>
+                    <span>Danh Sách Chi Nhánh</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i><span>Quản Lý Nhân Viên</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapse " asp-controller="Skills" asp-action="Index"><i class="bi bi-shield-fill"></i>Danh Sách Kỹ Năng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapse " asp-controller="Employees" asp-action="Index"><i class="bi bi-person-fill"></i>Danh Sách Nhân Viên</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapse " asp-controller="Employees" asp-action="Inactivity"><i class="bi bi-person-fill"></i>Danh Sách Nhân Viên Tạm Nghỉ Việc</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+        @RenderBody()<!-- End Page Title -->
+
+    </main><!-- End #main -->
+    <footer id="footer" class="footer">
+
+        <div class="credits text-center">
+            <img style="background-image: url(https://www.mitani.co.jp/img/common/dots_blue.png), url(https://www.mitani.co.jp/img/aureole/footer_bg.jpg); " src="https://www.mitani.co.jp/application/files/6015/8986/1844/aureole_group.svg" alt="AUREOLE GROUP">
+
+        </div>
+        <div style="font-size:0.9rem;letter-spacing:.04em;margin-top:20px;text-align:center">©Copyright All Rights Reserved</div>
+    </footer><!-- End Footer -->
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/assets/vendor/quill/quill.min.js"></script>
+    <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="~/assets/vendor/chart.js/chart.min.js"></script>
+    <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="~/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <script src="http://cdn.datatables.net/plug-ins/1.11.3/i18n/vi.json"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/assets/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

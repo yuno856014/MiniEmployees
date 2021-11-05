@@ -1,0 +1,117 @@
+﻿@model IEnumerable<AIT.DB.Models.Employee>
+
+@{
+    ViewData["Title"] = "Danh Sách Nhân Viên Đã Nghỉ";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>Danh Sách Nhân Viên Đã Nghỉ</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Danh Sách Nhân Viên Đã Nghỉ</li>
+        </ol>
+    </nav>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div style="float:right;width:26%" class="alert @TempData["AlertType"] hide" id="AlertBox" role="alert">
+            <i class="bi bi-check-circle me-1"></i> @TempData["AlertMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+<p>
+    <a class="btn btn-success" asp-action="Create"><i class="bi bi-plus-lg"></i> Thêm Mới Nhân Viên</a>
+</p>
+<table class="table table-hover" id="myTableEmployees">
+    <thead style="background-color:black;color:white">
+        <tr>
+            <th>#</th>
+            <th>
+                Tên Nhân Viên
+            </th>
+            <th>
+                Avatar
+            </th>
+            <th>
+                Chi Nhánh
+            </th>
+            <th>
+                Trạng Thái
+            </th>
+            <th>
+                Kỹ Năng
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Status)
+            {
+        <tr>
+            <td>@item.EmployeeId</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeName)
+            </td>
+            <td>
+                <img class="img-fluid" src="/Images/employees/@item.Avatar" style="width:85px;height:85px;object-fit:cover;" alt="Alternate Text" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch.BranchName)
+            </td>
+            <td>
+                @if (item.Status == false)
+                {
+                    <span class="badge badge-success" style="background-color:green">Hoạt Động</span>
+                }
+                else
+                {
+                    <span class="badge badge-warning" style="background-color: #ffc107">Tạm Nghỉ</span>
+                }
+            </td>
+            <td>
+                @{
+                    var name = item.Skill.SkillName;
+                    string[] arrName = name.Split(",");
+                    foreach (var arr in arrName)
+                    {
+                        <span class="badge badge-dark" style="background-color: #0dcaf0">@arr</span>
+                    }
+                }
+            </td>
+            <td>
+                @if (item.Status)
+                {
+                    <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-secondary" title="Xem"><i class="bi bi-eye"></i></a>
+                    <a asp-action="ChangeStatus" asp-route-id="@item.EmployeeId" class="btn btn-warning" title="Thay đổi trạng thái"><i class="bx bx-lock-alt"></i></a>
+                }
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(function () {
+            $('#AlertBox').removeClass('hide');
+            $('#AlertBox').delay(3500).slideUp(600);
+        });
+        $.fn.dataTable.ext.errMode = 'none';
+        $('#myTableEmployees').DataTable({
+            columnDefs: [
+                { orderable: false, targets: [2, 4, 5, 6] }
+            ],
+            order: [[0, 'desc']],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/vi.json"
+            }
+        });
+        $(document).ready(function () {
+            $('#myTableEmployees').DataTable();
+        });
+    </script>
+}

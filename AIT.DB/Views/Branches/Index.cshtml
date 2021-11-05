@@ -1,0 +1,83 @@
+﻿@model IEnumerable<AIT.DB.Models.Branch>
+
+@{
+    ViewData["Title"] = "Danh Sách Chi Nhánh";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+   
+}
+
+<div class="pagetitle">
+    <h1>Danh Sách Chi Nhánh</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Danh sách chi nhánh</li>
+        </ol>
+    </nav>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div style="float:right;width:20%" class="alert @TempData["AlertType"] hide" id="AlertBox" role="alert">
+            <i class="bi bi-check-circle me-1"></i> @TempData["AlertMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+<p>
+    <a class="btn btn-success" asp-controller="Branches" asp-action="Create"><i class="bi bi-plus-lg"></i> Thêm Mới Chi Nhánh</a>
+</p>
+<table class="table table-hover" id="myTableBranchs">
+    <thead style="background-color:black;color:white">
+        <tr>
+            <th>#</th>
+            <th>
+                Chi Nhánh
+            </th>
+            <th>
+                Địa Chỉ
+            </th>
+            <th>Nhân Viên</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.BranchId</td>
+                <td>
+                    @item.BranchName
+                </td>
+                <td>
+                    @item.Address
+                </td>
+                <td>@item.Employees.Count</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.BranchId" class="btn btn-primary" title="Sửa"><i class="bi bi-pen"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.BranchId" class="btn btn-secondary" title="Xem"><i class="bi bi-eye"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.BranchId" class="btn btn-danger" title="Xóa"><i class="bi bi-trash-fill"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(function () {
+            $('#AlertBox').removeClass('hide');
+            $('#AlertBox').delay(3500).slideUp(600);
+        });
+        $.fn.dataTable.ext.errMode = 'none';
+        $('#myTableBranchs').DataTable({
+            columnDefs: [
+                { orderable: false, targets: [3,4] }
+            ],
+            order: [[0, 'desc']],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/vi.json"
+            }
+        });
+        $(document).ready(function () {
+            $('#myTableBranchs').DataTable();
+        });
+    </script>
+}

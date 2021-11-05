@@ -1,0 +1,83 @@
+﻿@model IEnumerable<AIT.DB.Models.Skill>
+
+@{
+    ViewData["Title"] = "Danh Sách Kỹ Năng";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+    
+}
+
+
+<div class="pagetitle">
+    <h1>Danh Sách Kỹ Năng</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Danh sách kỹ năng</li>
+        </ol>
+    </nav>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div style="float:right;width:24%" class="alert @TempData["AlertType"] hide" id="AlertBox" role="alert">
+            <i class="bi bi-check-circle me-1"></i> @TempData["AlertMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+<p>
+    <a class="btn btn-success" asp-controller="Skills" asp-action="Create"><i class="bi bi-plus-lg"></i> Thêm Mới Kỹ năng</a>
+</p>
+<table class="table table-hover" id="myTableSkill">
+    <thead style="background-color:black;color:white">
+        <tr>
+            <th>#</th>
+            <th>
+                Tên kỹ năng
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.SkillId</td>
+                <td>
+                    @{ 
+                        var name = item.SkillName;
+                        string[] arrName = name.Split(",");
+                        foreach(var arr in arrName)
+                {
+                    <span>@arr</span>
+                }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.SkillId" class="btn btn-primary" title="Sửa"><i class="bi bi-pen"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.SkillId" class="btn btn-secondary" title="Xem"><i class="bi bi-eye"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.SkillId" class="btn btn-danger" title="Xóa"><i class="bi bi-trash-fill"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(function () {
+            $('#AlertBox').removeClass('hide');
+            $('#AlertBox').delay(3500).slideUp(600);
+        });
+        $.fn.dataTable.ext.errMode = 'none';
+        $('#myTableSkill').DataTable({
+            columnDefs: [
+                { orderable: false, targets: 2 }
+            ],
+            order: [[0, 'desc']],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/vi.json"
+            }
+        });
+        $(document).ready(function () {
+            $('#myTableSkill').DataTable();
+        });
+    </script>
+}

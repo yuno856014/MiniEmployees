@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "404 Page not found";
+    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
+}
+<main>
+    <div class="container">
+
+        <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+            <h1>404</h1>
+            <h2>The page you are looking for doesn't exist.</h2>
+            <a class="btn" asp-controller="Account" asp-action="Login">Back to home</a>
+            <img src="~/assets/img/not-found.svg" class="img-fluid py-5" alt="Page Not Found">
+            <div class="credits">
+                <div style="font-size:0.9rem;letter-spacing:.04em;margin-top:20px">©Copyright All Rights Reserved</div>
+            </div>
+        </section>
+
+    </div>
+</main><!-- End #main -->
